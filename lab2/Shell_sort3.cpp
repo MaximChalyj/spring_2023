@@ -62,13 +62,13 @@ void Shell_sort(int a[], int N)
             }
         }
     }
-    std::cout << N << " ";
-    std::cout << permutation << std::endl;
+    //std::cout << N << " ";
+    //std::cout << permutation << std::endl;
 }
 
 int main() 
 {
-    for (int N=1000; N<500000; N+=1000)
+    for (int N=1000; N<500000; N*=1.2)
     {
         int a[N];
 
@@ -83,6 +83,9 @@ int main()
             //std::cout << a[i] << " ";
         }
 
+        int S = 0;
+        for (int i=0; i<100; i++)
+        {
         auto begin = std::chrono::steady_clock::now();
 
         Shell_sort(a, N);
@@ -90,8 +93,10 @@ int main()
         auto end = std::chrono::steady_clock::now();
         auto time_span =
         std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+        S+=time_span.count();
+        }
 
-        //std::cout << N << " ";
-        //std::cout << time_span.count() << std::endl; 
+        std::cout << N << " ";
+        std::cout << S/100 << std::endl; 
     }
 }
