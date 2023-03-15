@@ -2,43 +2,42 @@
 #include <random>
 #include <chrono>
 
-
-void poisk_lin_A(int a[], int N, int key)
+void poisk_lin_A(int *a, int N, int key)
 { 
     int temp;
     for (int i = 0; i < N; ++i) {
-        if (a[i] == key) {
-            temp = a[0];
-            a[0] = a[i];
-            a[i] = temp;
+        if (*(a+i) == key) {
+            temp = *a;
+            *a = *(a+i);
+            *(a+i) = temp;
         }
     }
 }
 
-void poisk_lin_B(int a[], int N, int key)
+void poisk_lin_B(int *a, int N, int key)
 { 
     int temp;
     for (int i = 0; i < N; ++i) {
-        if (a[i] == key and i != 0) {
-            temp = a[i-1];
-            a[i-1] = a[i];
-            a[i] = temp;
+        if (*(a+i) == key and i != 0) {
+            temp = *(a+i-1);
+            *(a+i-1) = *(a+i);
+            *(a+i) = temp;
         }
     }
 }
 
-void poisk_lin_C(int a[], int N, int key)
+void poisk_lin_C(int *a, int N, int key)
 { 
     int c[N] = {0};
     int temp;
     for (int i = 0; i < N; ++i) {
-        if (a[i] == key) {
-            a[i] += 1;
+        if (*(a+i) == key) {
+            *(a+i) += 1;
             if (i != 0){
                 if (c[i] > c[i-1]){
-                    temp = a[i-1];
-                    a[i-1] = a[i];
-                    a[i] = temp;
+                    temp = *(a+i-1);
+                    *(a+i-1) = *(a+i);
+                    *(a+i) = temp;
                     
                     temp = c[i-1];
                     c[i-1] = c[i];
@@ -63,8 +62,8 @@ int main()
 
         for (int i=0; i<N; i++)
         {
-            a[i] = arr[dstr(rng)];
-            //std::cout << a[i] << " ";
+            *(a+i) = arr[dstr(rng)];
+            //std::cout << *(a+i) << " ";
         }
 
         auto begin = std::chrono::steady_clock::now();
