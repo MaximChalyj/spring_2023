@@ -2,12 +2,12 @@
 #include <random>
 #include <chrono>
 
-int exhaustive_search(int a[], int N, int key)
+int linear_search(int* a, int N, int key)
 {
     bool flag = false;
     for (int i = 0; i < N; ++i) 
     {
-        if (key == a[i]) 
+        if (key == *(a + i)) 
         {
             flag = true;
             return i;
@@ -22,7 +22,7 @@ int main()
     int key = -1;
     for (int N=1000; N<500000; N+=1000)
     {
-        int a[N];
+        int* a = new int[N];
 
         int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
         unsigned seed = 1001;
@@ -31,13 +31,12 @@ int main()
 
         for (int i=0; i<N; i++)
         {
-            a[i] = arr[dstr(rng)];
-            //std::cout << a[i] << " ";
+            *(a + i) = arr[dstr(rng)];
         }
 
         auto begin = std::chrono::steady_clock::now();
 
-        exhaustive_search(a, N, key);
+        linear_search(a, N, key);
 
         auto end = std::chrono::steady_clock::now();
         auto time_span =
@@ -45,5 +44,7 @@ int main()
 
         std::cout << N << " "; 
         std::cout << time_span.count() << std::endl;  
+
+        delete[] a;
     }
 }
